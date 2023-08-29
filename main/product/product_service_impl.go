@@ -65,11 +65,11 @@ func (service ProductServiceImpl) FindAll(param *dto.FindProductRequest) *dto.Fi
 	}
 
 	if param.IsRecommendation != nil {
-		tx.Where("is_recommended = ?", param.IsRecommendation)
+		tx.Where("is_recommended = ?", *param.IsRecommendation)
 	}
 
 	if param.CategoryId != nil {
-		tx.Where("category_id = ?", param.CategoryId)
+		tx.Where("category_id = ?", *param.CategoryId)
 	}
 
 	var result dto.FindProductResponse
