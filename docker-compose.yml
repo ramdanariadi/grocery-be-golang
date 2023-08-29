@@ -9,6 +9,8 @@ services:
       DB_PASS: secret
       DB_NAME: grocery
       DB_HOST: db
+      JWT_SECRET: npgoV9KTudzDIPN
+      SALT: fCsCkWOCpGuQvHP
     networks:
       - tunas-network
     links:
