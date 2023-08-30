@@ -11,6 +11,7 @@ services:
       DB_HOST: db
       JWT_SECRET: npgoV9KTudzDIPN
       SALT: fCsCkWOCpGuQvHP
+      ENVIRONMENT: staging
     networks:
       - tunas-network
     links:
