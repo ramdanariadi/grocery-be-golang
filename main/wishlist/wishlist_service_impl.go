@@ -69,7 +69,7 @@ func (service ServiceImpl) Find(reqBody *dto.FindWishlistDTO) []*dto.WishlistDTO
 
 func (service ServiceImpl) FindByProductId(productId string, userId string) *dto.WishlistDTO {
 	wishlist := Wishlist{ProductId: productId, UserId: userId}
-	find := service.DB.Preload("Product.Category").Find(&wishlist)
+	find := service.DB.Model(&Wishlist{}).Where("product_id ? AND user_id = ?", productId, userId).Preload("Product.Category").Find(&wishlist)
 	if find.RowsAffected < 1 {
 		panic(exception.ValidationException{"INVALID_WISHLIST"})
 	}
