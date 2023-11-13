@@ -15,6 +15,10 @@ type ShopServiceImpl struct {
 	*gorm.DB
 }
 
+func NewShopServiceImpl(DB *gorm.DB) ShopService {
+	return &ShopServiceImpl{DB: DB}
+}
+
 func (service *ShopServiceImpl) AddShop(userId string, shop dto.AddShopDTO) {
 	if nil == shop.Address || nil == shop.Name {
 		panic(exception.ValidationException{Message: exception.BadRequest})

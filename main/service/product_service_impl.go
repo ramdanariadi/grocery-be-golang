@@ -20,6 +20,10 @@ type ProductServiceImpl struct {
 	Redis *redis.Client
 }
 
+func NewProductServiceImpl(DB *gorm.DB, redis *redis.Client) ProductService {
+	return &ProductServiceImpl{DB: DB, Redis: redis}
+}
+
 func (service ProductServiceImpl) Save(userId string, requestBody *dto2.AddProductDTO) {
 	var category model.Category
 	tx := service.DB.Find(&category, "id = ?", requestBody.CategoryId)

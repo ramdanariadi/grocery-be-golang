@@ -10,15 +10,15 @@ import (
 	"strings"
 )
 
-type ServiceImpl struct {
+type CartServiceImpl struct {
 	DB *gorm.DB
 }
 
-func NewService(DB *gorm.DB) Service {
-	return &ServiceImpl{DB: DB}
+func NewCartService(DB *gorm.DB) CartService {
+	return &CartServiceImpl{DB: DB}
 }
 
-func (service ServiceImpl) Store(productId string, total uint, userId string) *dto2.CartTotalItemDTO {
+func (service CartServiceImpl) Store(productId string, total uint, userId string) *dto2.CartTotalItemDTO {
 	var productRef model.Product
 	tx := service.DB.Where("id = ?", productId).Find(&productRef)
 	if tx.Error != nil {
@@ -42,7 +42,7 @@ func (service ServiceImpl) Store(productId string, total uint, userId string) *d
 	return &dto2.CartTotalItemDTO{TotalItem: int64(uint(count))}
 }
 
-func (service ServiceImpl) Destroy(id string, userId string) {
+func (service CartServiceImpl) Destroy(id string, userId string) {
 	cartRef := model.Cart{ID: id}
 	tx := service.DB.Find(&cartRef)
 	if tx.Error != nil {
@@ -52,7 +52,7 @@ func (service ServiceImpl) Destroy(id string, userId string) {
 	utils.PanicIfError(db.Error)
 }
 
-func (service ServiceImpl) Find(reqBody *dto2.FindCartDTO) []*dto2.Cart {
+func (service CartServiceImpl) Find(reqBody *dto2.FindCartDTO) []*dto2.Cart {
 	var carts []*model.Cart
 	tx := service.DB.Model(&carts)
 	tx.Joins("LEFT JOIN products p ON p.id = carts.product_id AND p.deleted_at IS NULL")

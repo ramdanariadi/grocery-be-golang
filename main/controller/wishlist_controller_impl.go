@@ -13,8 +13,8 @@ type WishlistControllerImpl struct {
 	Service service.WishlistService
 }
 
-func NewWishlistController(DB *gorm.DB) *WishlistControllerImpl {
-	return &WishlistControllerImpl{Service: service.WishlistServiceImpl{DB: DB}}
+func NewWishlistController(db *gorm.DB) WishlistController {
+	return &WishlistControllerImpl{Service: service.NewWishlistServiceImpl(db)}
 }
 
 func (controller WishlistControllerImpl) Store(ctx *gin.Context) {

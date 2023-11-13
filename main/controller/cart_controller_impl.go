@@ -11,11 +11,11 @@ import (
 )
 
 type CartControllerImpl struct {
-	Service service.Service
+	Service service.CartService
 }
 
 func NewController(db *gorm.DB) CartController {
-	return &CartControllerImpl{Service: service.NewService(db)}
+	return &CartControllerImpl{Service: service.NewCartService(db)}
 }
 
 func (controller CartControllerImpl) Store(ctx *gin.Context) {

@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/google/uuid"
-	dto2 "github.com/ramdanariadi/grocery-product-service/main/dto"
+	"github.com/ramdanariadi/grocery-product-service/main/dto"
 	"github.com/ramdanariadi/grocery-product-service/main/exception"
 	"github.com/ramdanariadi/grocery-product-service/main/model"
 	"github.com/ramdanariadi/grocery-product-service/main/utils"
@@ -12,6 +12,10 @@ import (
 
 type WishlistServiceImpl struct {
 	DB *gorm.DB
+}
+
+func NewWishlistServiceImpl(DB *gorm.DB) WishlistService {
+	return &WishlistServiceImpl{DB: DB}
 }
 
 func (service WishlistServiceImpl) Store(productId string, userId string) {
@@ -40,7 +44,7 @@ func (service WishlistServiceImpl) Destroy(productId string, userId string) {
 	utils.PanicIfError(tx.Error)
 }
 
-func (service WishlistServiceImpl) Find(reqBody *dto2.FindWishlistDTO) []*dto2.WishlistDTO {
+func (service WishlistServiceImpl) Find(reqBody *dto.FindWishlistDTO) []*dto.WishlistDTO {
 	var wishlists []*model.Wishlist
 	tx := service.DB.Model(&model.Wishlist{})
 	tx.Joins("LEFT JOIN products p ON p.id = wishlists.product_id AND p.deleted_at IS NULL")
@@ -50,9 +54,9 @@ func (service WishlistServiceImpl) Find(reqBody *dto2.FindWishlistDTO) []*dto2.W
 		tx.Where("LOWER(p.name) like ?", strings.ToLower("%"+*reqBody.Search+"%"))
 	}
 	tx.Limit(reqBody.PageSize).Offset(reqBody.PageIndex * reqBody.PageSize).Find(&wishlists)
-	wishlistsResult := make([]*dto2.WishlistDTO, 0)
+	wishlistsResult := make([]*dto.WishlistDTO, 0)
 	for _, wishlist := range wishlists {
-		wishlistsResult = append(wishlistsResult, &dto2.WishlistDTO{
+		wishlistsResult = append(wishlistsResult, &dto.WishlistDTO{
 			ID:          wishlist.ID,
 			ProductId:   wishlist.ProductId,
 			Name:        wishlist.Product.Name,
@@ -67,14 +71,14 @@ func (service WishlistServiceImpl) Find(reqBody *dto2.FindWishlistDTO) []*dto2.W
 	return wishlistsResult
 }
 
-func (service WishlistServiceImpl) FindByProductId(productId string, userId string) *dto2.WishlistDTO {
+func (service WishlistServiceImpl) FindByProductId(productId string, userId string) *dto.WishlistDTO {
 	wishlist := model.Wishlist{ProductId: productId, UserId: userId}
 	find := service.DB.Model(&model.Wishlist{}).Where("product_id = ? AND user_id = ?", productId, userId).Preload("Product.Category").Find(&wishlist)
 	if find.RowsAffected < 1 {
 		panic(exception.ValidationException{"INVALID_WISHLIST"})
 	}
 
-	wishlistDTO := &dto2.WishlistDTO{
+	wishlistDTO := &dto.WishlistDTO{
 		ID:          wishlist.ID,
 		ProductId:   wishlist.ProductId,
 		Name:        wishlist.Product.Name,

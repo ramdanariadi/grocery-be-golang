@@ -16,6 +16,10 @@ type CategoryServiceImpl struct {
 	RedisClient *redis.Client
 }
 
+func NewCategoryServiceImpl(DB *gorm.DB, redisClient *redis.Client) CategoryService {
+	return &CategoryServiceImpl{DB: DB, RedisClient: redisClient}
+}
+
 func (service CategoryServiceImpl) FindAll(pageIndex int, pageSize int) *dto2.AllCategories {
 	var categories []*model.Category
 	service.DB.Limit(pageSize).Offset(pageSize * pageIndex).Find(&categories)

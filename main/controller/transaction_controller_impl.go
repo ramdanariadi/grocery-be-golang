@@ -13,8 +13,8 @@ type TransactionControllerImpl struct {
 	Service service.TransactionService
 }
 
-func NewTransactionController(DB *gorm.DB) TransactionController {
-	return TransactionControllerImpl{Service: &service.TransactionServiceImpl{DB: DB}}
+func NewTransactionController(db *gorm.DB) TransactionController {
+	return &TransactionControllerImpl{Service: service.NewTransactionServiceImpl(db)}
 }
 
 func (controller TransactionControllerImpl) Save(ctx *gin.Context) {

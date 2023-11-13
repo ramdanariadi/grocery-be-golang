@@ -14,7 +14,7 @@ type ShopControllerImpl struct {
 }
 
 func NewShopController(db *gorm.DB) ShopController {
-	return &ShopControllerImpl{shopService: &service.ShopServiceImpl{DB: db}}
+	return &ShopControllerImpl{shopService: service.NewShopServiceImpl(db)}
 }
 
 func (controller *ShopControllerImpl) AddShop(ctx *gin.Context) {

@@ -12,11 +12,9 @@ type CategoryControllerImpl struct {
 	Service service.CategoryService
 }
 
-func NewCategoryController(db *gorm.DB) *CategoryControllerImpl {
+func NewCategoryController(db *gorm.DB) CategoryController {
 	return &CategoryControllerImpl{
-		Service: service.CategoryServiceImpl{
-			DB: db,
-		},
+		Service: service.NewCategoryServiceImpl(db, nil),
 	}
 }
 
