@@ -5,7 +5,6 @@ import (
 	"github.com/ramdanariadi/grocery-product-service/main/dto"
 	"github.com/ramdanariadi/grocery-product-service/main/exception"
 	"github.com/ramdanariadi/grocery-product-service/main/model"
-	userModel "github.com/ramdanariadi/grocery-product-service/main/user"
 	"github.com/ramdanariadi/grocery-product-service/main/utils"
 	"gorm.io/gorm"
 	"log"
@@ -24,18 +23,12 @@ func (service *ShopServiceImpl) AddShop(userId string, shop dto.AddShopDTO) {
 		panic(exception.ValidationException{Message: exception.BadRequest})
 	}
 
-	var user userModel.User
-	find := service.DB.Where("id = ?", userId).Find(&user)
-	if nil != find.Error {
-		panic(exception.ValidationException{Message: exception.BadRequest})
-	}
-
 	newUUID, _ := uuid.NewUUID()
 	s := model.Shop{
 		ID:       newUUID.String(),
 		Name:     *shop.Name,
 		Address:  *shop.Address,
-		User:     user,
+		UserId:   userId,
 		ImageUrl: *shop.ImageUrl,
 	}
 	tx := service.DB.Create(&s)
