@@ -3,7 +3,7 @@ POST http://103.181.142.42/api/v1/user/register
 Content-Type: application/json
 
 {
-  "email": "admin@tunas.id",
+  "email": "ari@tunas.id",
   "password": "rahasia"
 }
 
@@ -157,7 +157,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4N
 }
 
 ### GET ALL PRODUCT
-GET http://103.181.142.42/api/v1/product?pageIndex=0&pageSize=100&isTop=true
+GET http://103.181.142.42/api/v1/product?pageIndex=0&pageSize=10
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 
@@ -223,7 +223,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4N
 #######################
 
 ### STORE CART
-POST http://103.181.142.42/api/v1/cart/7d3d04f0-c63b-11ed-8d33-f45c89b11b13/2
+POST http://103.181.142.42/api/v1/cart/e9b15a1e-f6f5-11ed-9dc2-0242ac130003/2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 
@@ -238,17 +238,22 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 
 ### ADD WISHLIST
-POST http://103.181.142.42/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/a3c02e8c-11d2-11ec-82a8-0242ac130003
+POST http://103.181.142.42/api/v1/wishlist/a3c02e8c-11d2-11ec-82a8-0242ac130003
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 
 ### GET USER WISHLIST
-GET http://103.181.142.42/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa
+GET http://103.181.142.42/api/v1/wishlist
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
+
+### GET USER WISHLIST BY PRODUCT ID
+GET http://103.181.142.42/api/v1/wishlist/c98b65a1-f6f5-11ed-9dc2-0242ac130003
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 
 ### DESTROY USER WISHLIST
-DELETE http://103.181.142.42/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/8c934506-7d64-11ed-8570-f45c89b11b13
+DELETE http://103.181.142.42/api/v1/wishlist/c98b65a1-f6f5-11ed-9dc2-0242ac130003
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA2Mjc4NzI5Njk2OTE3MjcsInVzZXJJZCI6IjkzODhjYjM3LWY1N2YtMTFlZC05ZGMyLTAyNDJhYzEzMDAwMyJ9.4OVBJ9DcZ3mSY4QtmLPwLDc2EWHG_XJf1_okLTkomcE
 

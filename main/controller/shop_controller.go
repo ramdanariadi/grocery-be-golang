@@ -1,0 +1,10 @@
+package controller
+
+import "github.com/gin-gonic/gin"
+
+type ShopController interface {
+	AddShop(ctx *gin.Context)
+	EditShop(ctx *gin.Context)
+	DeleteShop(ctx *gin.Context)
+	GetShop(ctx *gin.Context)
+}

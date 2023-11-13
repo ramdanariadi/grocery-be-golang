@@ -4,17 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/ramdanariadi/grocery-product-service/main/cart"
-	"github.com/ramdanariadi/grocery-product-service/main/category"
+	"github.com/ramdanariadi/grocery-product-service/main/controller"
 	"github.com/ramdanariadi/grocery-product-service/main/exception"
-	"github.com/ramdanariadi/grocery-product-service/main/product"
+	model "github.com/ramdanariadi/grocery-product-service/main/model"
 	"github.com/ramdanariadi/grocery-product-service/main/setup"
-	"github.com/ramdanariadi/grocery-product-service/main/shop"
-	"github.com/ramdanariadi/grocery-product-service/main/transaction"
-	"github.com/ramdanariadi/grocery-product-service/main/transaction/model"
 	"github.com/ramdanariadi/grocery-product-service/main/user"
 	"github.com/ramdanariadi/grocery-product-service/main/utils"
-	"github.com/ramdanariadi/grocery-product-service/main/wishlist"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
@@ -32,7 +27,7 @@ func main() {
 	connection, err := setup.NewDbConnection()
 	db, err := gorm.Open(postgres.New(postgres.Config{Conn: connection}))
 	utils.PanicIfError(err)
-	err = db.AutoMigrate(&category.Category{}, &product.Product{}, &wishlist.Wishlist{}, &cart.Cart{}, &model.Transaction{}, &model.TransactionDetail{}, &user.User{}, &shop.Shop{})
+	err = db.AutoMigrate(&model.Category{}, &model.Product{}, &model.Wishlist{}, &model.Cart{}, &model.Transaction{}, &model.TransactionDetail{}, &user.User{}, &model.Shop{})
 	utils.LogIfError(err)
 
 	client := setup.NewRedisClient()
@@ -52,7 +47,7 @@ func main() {
 
 	shopGroup := router.Group("api/v1/shop")
 	{
-		shopController := shop.NewShopController(db)
+		shopController := controller.NewShopController(db)
 		shopGroup.POST("", user.Middleware, shopController.AddShop)
 		shopGroup.PUT("", user.Middleware, shopController.EditShop)
 		shopGroup.GET("", user.Middleware, shopController.GetShop)
@@ -61,7 +56,7 @@ func main() {
 
 	categoryRoute := router.Group("api/v1/category")
 	{
-		categoryController := category.NewCategoryController(db)
+		categoryController := controller.NewCategoryController(db)
 		categoryRoute.POST("", user.Middleware, categoryController.Save)
 		categoryRoute.GET("/:id", categoryController.FindById)
 		categoryRoute.GET("", categoryController.FindAll)
@@ -71,7 +66,7 @@ func main() {
 
 	productRoute := router.Group("api/v1/product")
 	{
-		productController := product.NewProductController(db, client)
+		productController := controller.NewProductController(db, client)
 		productRoute.POST("", user.Middleware, productController.Save)
 		productRoute.GET("/:id", productController.FindById)
 		productRoute.GET("", productController.FindAll)
@@ -83,7 +78,7 @@ func main() {
 
 	cartRoute := router.Group("api/v1/cart")
 	{
-		cartController := cart.NewController(db)
+		cartController := controller.NewController(db)
 		cartRoute.POST("/:productId/:total", user.Middleware, cartController.Store)
 		cartRoute.DELETE("/:id", user.Middleware, cartController.Destroy)
 		cartRoute.GET("", user.Middleware, cartController.Find)
@@ -91,7 +86,7 @@ func main() {
 
 	wishlistRoute := router.Group("api/v1/wishlist")
 	{
-		wishlistController := wishlist.NewWishlistController(db)
+		wishlistController := controller.NewWishlistController(db)
 		wishlistRoute.POST("/:productId", user.Middleware, wishlistController.Store)
 		wishlistRoute.DELETE("/:productId", user.Middleware, wishlistController.Destroy)
 		wishlistRoute.GET("", user.Middleware, wishlistController.Find)
@@ -100,11 +95,11 @@ func main() {
 
 	transactionGroup := router.Group("api/v1/transaction")
 	{
-		transactionController := transaction.NewTransactionController(db)
+		transactionController := controller.NewTransactionController(db)
 		transactionGroup.POST("", user.Middleware, transactionController.Save)
 		transactionGroup.GET("", user.Middleware, transactionController.Find)
 	}
 
-	err = router.Run()
+	err = router.Run(":10000")
 	utils.LogIfError(err)
 }
