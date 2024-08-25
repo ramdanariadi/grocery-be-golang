@@ -1,0 +1,1 @@
+INSERT INTO public.users (id, username, password, email, mobile_phone_number, created_at, updated_at, deleted_at) VALUES ('df4ea04c-f578-11ed-8169-8c859078c9ec', '', '$2a$10$D85s/8mnQaFVeNTjgJEQpu1MqkRSzvVzTqUMsL63fi3AmyycbOAzS', 'admin@tunas.id', '', '2023-05-18 20:38:20.974316', '2023-05-18 20:38:20.974316', null);

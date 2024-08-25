@@ -1,0 +1,2 @@
+INSERT INTO public.transactions (id, user_id, total_price, created_at, updated_at, deleted_at) VALUES ('83b3182e-d0d6-11ed-bbc5-8c859078c9ec', '73f11ee6-d05d-11ed-88b8-8c859078c9ec', 10, '2023-04-01 21:45:26.948485 +00:00', '2023-04-01 21:45:26.948485 +00:00', null);
+INSERT INTO public.transactions (id, user_id, total_price, created_at, updated_at, deleted_at) VALUES ('df66f546-d0d6-11ed-bdce-8c859078c9ec', '73f11ee6-d05d-11ed-88b8-8c859078c9ec', 10, '2023-04-01 21:48:00.800025 +00:00', '2023-04-01 21:48:00.800025 +00:00', null);
